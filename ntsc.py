@@ -401,8 +401,9 @@ class Ntsc:
         shy = 0
         noise = 0.0
         if self._vhs_head_switching_phase_noise != 0.0:
-            x = numpy.int32(self.rand() * self.rand() * self.rand() * self.rand())
-            x %= 2000000000
+            x = numpy.int32(random.randint(1, 2000000000))
+            #x = numpy.int32(self.rand() * self.rand() * self.rand() * self.rand())
+            #x %= 2000000000
             noise = x / 1000000000.0 - 1.0
             noise *= self._vhs_head_switching_phase_noise
 
@@ -682,7 +683,7 @@ class Ntsc:
         I[field::2] = self._blur_chroma(I[field::2])
         Q[field::2] = self._blur_chroma(Q[field::2])
 
-        yiq2bgr(yiq, dst, field)
+        return yiq2bgr(yiq, dst, field)
 
     def _blur_chroma(self, chroma: numpy.ndarray) -> numpy.ndarray:
         h, w = chroma.shape
